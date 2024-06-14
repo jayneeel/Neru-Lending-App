@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:neru_lending_app/presentation/auth/screens/login_screen.dart';
 import 'package:neru_lending_app/utils/constant_colors.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -19,15 +22,18 @@ class SplashScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      color: ConstantColors.transparentWhiteColor, borderRadius: BorderRadius.circular(20)),
-                  child: Image.asset(
-                    "assets/images/logo.png",
-                    width: 180,
-                    height: 180,
-                  )),
+              GestureDetector(
+                onTap: ()=> Get.to(const LoginScreen()),
+                child: Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        color: ConstantColors.transparentWhiteColor, borderRadius: BorderRadius.circular(20)),
+                    child: Image.asset(
+                      "assets/images/logo.png",
+                      width: 180,
+                      height: 180,
+                    )),
+              ),
             ],
           ),
         ),
