@@ -53,86 +53,112 @@ class DashboardScreen extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: gradient,
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: ConstantColors.transparentWhiteColor,
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                padding: const EdgeInsets.all(25),
-                width: double.maxFinite,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Balance",
-                              style: TextStyle(
-                                  fontFamily: ConstantFonts.workSansMedium,
-                                  color: ConstantColors.whiteColor,
-                                  fontSize: 40),
-                            ),
-                            const CounterBalanceText(
-                              begin: 0,
-                              end: 6525.2,
-                              duration: Duration(seconds: 2),
-                              prefix: "\$ ",
-                              precision: 2,
-                              style: TextStyle(color: Pallete.whiteColor, fontSize: 20),
-                            ),
-                          ],
-                        ),
-                        Lottie.asset("assets/animations/balance_coins.json",
-                            width: 100, height: 100, fit: BoxFit.contain),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Text(
-                "Choose your",
-                style: TextStyle(fontSize: 35, color: Colors.white, fontFamily: ConstantFonts.workSansSemiBold),
-              ),
-              const Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const LiveBalanceCard(),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Industry ",
+                    "Choose your",
                     style: TextStyle(fontSize: 35, color: Colors.white, fontFamily: ConstantFonts.workSansSemiBold),
                   ),
-                  Icon(
-                    Icons.arrow_downward_rounded,
-                    color: Colors.white,
-                    size: 50,
-                  )
+                  Row(
+                    children: [
+                      Text(
+                        "Industry ",
+                        style: TextStyle(fontSize: 35, color: Colors.white, fontFamily: ConstantFonts.workSansSemiBold),
+                      ),
+                      Icon(
+                        Icons.arrow_downward_rounded,
+                        color: Colors.white,
+                        size: 50,
+                      )
+                    ],
+                  ),
                 ],
               ),
-              Expanded(
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.5),
-                  itemBuilder: (context, index) {
-                    final industry = data[index];
-                    return IndustryCard(image: industry['image'], text: industry['title']);
-                  },
-                  itemCount: data.length,
+            ),
+            Container(
+              decoration: BoxDecoration(
+
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.5),
+                      itemBuilder: (context, index) {
+                        final industry = data[index];
+                        return IndustryCard(image: industry['image'], text: industry['title']);
+                      },
+                      itemCount: data.length,
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class LiveBalanceCard extends StatelessWidget {
+  const LiveBalanceCard({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Container(
+        decoration: BoxDecoration(
+          color: ConstantColors.transparentWhiteColor,
+          borderRadius: BorderRadius.circular(25),
+        ),
+        padding: const EdgeInsets.all(25),
+        width: double.maxFinite,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Balance",
+                      style: TextStyle(
+                          fontFamily: ConstantFonts.workSansMedium,
+                          color: ConstantColors.whiteColor,
+                          fontSize: 40),
+                    ),
+                    const CounterBalanceText(
+                      begin: 0,
+                      end: 6525.2,
+                      duration: Duration(seconds: 2),
+                      prefix: "\$ ",
+                      precision: 2,
+                      style: TextStyle(color: Pallete.whiteColor, fontSize: 20),
+                    ),
+                  ],
                 ),
-              )
-            ],
-          ),
+                Lottie.asset("assets/animations/balance_coins.json",
+                    width: 100, height: 100, fit: BoxFit.contain),
+              ],
+            )
+          ],
         ),
       ),
     );
