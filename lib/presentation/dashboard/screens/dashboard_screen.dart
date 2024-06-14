@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:neru_lending_app/presentation/dashboard/widgets/counter_balance_text.dart';
@@ -58,7 +59,7 @@ class DashboardScreen extends StatelessWidget {
           children: [
             const LiveBalanceCard(),
             const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -82,26 +83,23 @@ class DashboardScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              decoration: BoxDecoration(
-
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: GridView.builder(
-                      shrinkWrap: true,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.5),
-                      itemBuilder: (context, index) {
-                        final industry = data[index];
-                        return IndustryCard(image: industry['image'], text: industry['title']);
-                      },
-                      itemCount: data.length,
-                    ),
-                  ),
-                ],
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.only(top: 30, left: 10, right: 10),
+                decoration: BoxDecoration(
+                  color: ConstantColors.transparentWhiteColor.withOpacity(0.1),
+                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(35), topRight: Radius.circular(35)),
+                ),
+                child: GridView.builder(
+                  shrinkWrap: true,
+                  gridDelegate:
+                      const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 1),
+                  itemBuilder: (context, index) {
+                    final industry = data[index];
+                    return IndustryCard(image: industry['image'], text: industry['title']);
+                  },
+                  itemCount: data.length,
+                ),
               ),
             )
           ],
@@ -140,9 +138,7 @@ class LiveBalanceCard extends StatelessWidget {
                     Text(
                       "Balance",
                       style: TextStyle(
-                          fontFamily: ConstantFonts.workSansMedium,
-                          color: ConstantColors.whiteColor,
-                          fontSize: 40),
+                          fontFamily: ConstantFonts.workSansMedium, color: ConstantColors.whiteColor, fontSize: 40),
                     ),
                     const CounterBalanceText(
                       begin: 0,
@@ -154,8 +150,7 @@ class LiveBalanceCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                Lottie.asset("assets/animations/balance_coins.json",
-                    width: 100, height: 100, fit: BoxFit.contain),
+                Lottie.asset("assets/animations/balance_coins.json", width: 100, height: 100, fit: BoxFit.contain),
               ],
             )
           ],
