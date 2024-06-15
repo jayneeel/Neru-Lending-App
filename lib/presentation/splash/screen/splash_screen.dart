@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:neru_lending_app/presentation/auth/screens/auth_gate_screen.dart';
 import 'package:neru_lending_app/presentation/auth/screens/login_screen.dart';
 import 'package:neru_lending_app/utils/constant_colors.dart';
 
@@ -57,6 +58,6 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void startTimer() {
-    Timer(const Duration(seconds: 3), ()=> Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const LoginScreen())));
+    Timer(const Duration(seconds: 3), ()=> Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const AuthScreen())));
   }
 }
