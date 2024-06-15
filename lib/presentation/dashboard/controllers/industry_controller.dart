@@ -1,30 +1,30 @@
-import "package:cloud_firestore/cloud_firestore.dart";
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
-import '../model/industry_response_model.dart';
-
-class IndustryController extends GetxController {
-  var industryList = <Industry>[].obs;
-  var isLoading = true.obs;
+class DashboardController extends GetxController {
+  final fetchIndustries = FirebaseFirestore.instance.collection("industries").snapshots();
+  var balance = 0.0.obs;
 
   @override
   void onInit() {
-    fetchIndustries();
     super.onInit();
+    fetchBalance();
   }
 
-  void fetchIndustries() async {
+  void fetchBalance() async {
     try {
-      isLoading(true);
-      QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('industries').get();
-      var industries = snapshot.docs.map((doc) => Industry.fromJson(doc.data() as Map<String, dynamic>)).toList();
-      print("***********");
-      print(industries);
-      industryList.assignAll(industries);
+      DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
+          .collection('balance')
+          .doc('business_coins')
+          .get();
+
+      if (documentSnapshot.exists) {
+        balance.value = documentSnapshot.get('balance');
+      } else {
+        print('Document does not exist');
+      }
     } catch (e) {
-      Get.snackbar('Error', e.toString(),);
-    } finally {
-      isLoading(false);
+      print('Error fetching balance: $e');
     }
   }
 }

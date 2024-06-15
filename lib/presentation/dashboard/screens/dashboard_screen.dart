@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:neru_lending_app/presentation/dashboard/controllers/industry_controller.dart';
 import 'package:neru_lending_app/presentation/dashboard/widgets/counter_balance_text.dart';
 import 'package:neru_lending_app/presentation/dashboard/widgets/industry_card.dart';
 import 'package:neru_lending_app/presentation/dashboard/widgets/shimmer_list.dart';
@@ -12,6 +14,7 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final DashboardController controller = Get.put(DashboardController());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ConstantColors.gradientStopColor,
@@ -52,7 +55,7 @@ class DashboardScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const LiveBalanceCard(),
+            Obx(()=> LiveBalanceCard(balance: controller.balance.value,)),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Column(
@@ -86,7 +89,7 @@ class DashboardScreen extends StatelessWidget {
                   borderRadius: const BorderRadius.only(topLeft: Radius.circular(35), topRight: Radius.circular(35)),
                 ),
                 child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                      stream: FirebaseFirestore.instance.collection("industries").snapshots(),
+                      stream: controller.fetchIndustries,
                       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                         if (snapshot.hasError) return Text('Error = ${snapshot.error}');
                         if (snapshot.hasData){
@@ -115,8 +118,9 @@ class DashboardScreen extends StatelessWidget {
 
 class LiveBalanceCard extends StatelessWidget {
   const LiveBalanceCard({
-    super.key,
+    super.key, required this.balance,
   });
+  final double balance;
 
   @override
   Widget build(BuildContext context) {
@@ -149,13 +153,13 @@ class LiveBalanceCard extends StatelessWidget {
                       style: TextStyle(
                           fontFamily: ConstantFonts.workSansMedium, color: ConstantColors.whiteColor, fontSize: 15),
                     ),
-                    const CounterBalanceText(
+                    CounterBalanceText(
                       begin: 0,
-                      end: 6525.2,
-                      duration: Duration(seconds: 2),
+                      end: balance,
+                      duration: const Duration(seconds: 2),
                       prefix: "\$ ",
                       precision: 2,
-                      style: TextStyle(color: Pallete.whiteColor, fontSize: 20),
+                      style: const TextStyle(color: Pallete.whiteColor, fontSize: 20),
                     ),
                   ],
                 ),
