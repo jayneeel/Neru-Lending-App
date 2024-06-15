@@ -11,18 +11,6 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final IndustryController industryController = Get.put(IndustryController());
-    final List<Map<String, dynamic>> data = [
-      {"image": "assets/images/accountant.jpeg", "title": "Accountant"},
-      {"image": "assets/images/medical.jpeg", "title": "Medical"},
-      {"image": "assets/images/automobile.jpeg", "title": "Automobile"},
-      {"image": "assets/images/medical.jpeg", "title": "Medical"},
-      {"image": "assets/images/real_estate.jpeg", "title": "Real Estate"},
-      {"image": "assets/images/automobile.jpeg", "title": "Automobile"},
-      {"image": "assets/images/real_estate.jpeg", "title": "Real Estate"},
-    ];
-
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
