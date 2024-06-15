@@ -7,7 +7,7 @@ import '../widgets/button.dart';
 
 class IndustryDetailsScreen extends StatelessWidget {
   const IndustryDetailsScreen({super.key, required this.data});
-  final data;
+  final data;     // Data fetched from firebase snapshot which is Key-Value pair
 
   @override
   Widget build(BuildContext context) {

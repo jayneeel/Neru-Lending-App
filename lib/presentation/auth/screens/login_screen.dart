@@ -14,9 +14,9 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AuthController authController = Get.put(AuthController());
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
+    final AuthController authController = Get.put(AuthController());            // AuthController
+    final TextEditingController emailController = TextEditingController();      // Controller for Email Field
+    final TextEditingController passwordController = TextEditingController();   // Controller for Password Field
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -41,7 +41,7 @@ class LoginScreen extends StatelessWidget {
                   try {
                     UserCredential userCredential = await authController.signInWithEmailAndPassword(emailController.text.toString(), passwordController.text.toString());
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Successful!")));
-                    Get.to(const DashboardScreen());
+                    Get.to(const DashboardScreen());    // if user is authenticated ; navigate to Dashboard
                   } catch (e) {
                     print('Error signing in: $e');
                   }

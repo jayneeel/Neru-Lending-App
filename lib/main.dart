@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       theme: ThemeData(
-        fontFamily: ConstantFonts.workSansRegular,
+        fontFamily: ConstantFonts.workSansRegular,  // Consistent Font throughout the app
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,

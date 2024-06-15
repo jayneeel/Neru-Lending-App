@@ -18,9 +18,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    startTimer();
+    startTimer(); // Timer to get to next activity
   }
 
   @override
@@ -58,6 +57,6 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void startTimer() {
-    Timer(const Duration(seconds: 3), ()=> Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const AuthScreen())));
+    Timer(const Duration(seconds: 3), ()=> Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const AuthScreen()))); // pushReplacement removing the activity from stack
   }
 }

@@ -13,9 +13,9 @@ class AuthScreen extends StatelessWidget {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return const DashboardScreen();
+              return const DashboardScreen(); // If session is active and valid, navigate to dashboard
             } else {
-              return const LoginScreen();
+              return const LoginScreen(); // If session is terminated, navigate to login; when user logs out.
             }
           },
         ));
