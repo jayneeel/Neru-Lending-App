@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:neru_lending_app/presentation/dashboard/widgets/counter_balance_text.dart';
 import 'package:neru_lending_app/presentation/dashboard/widgets/industry_card.dart';
+import 'package:neru_lending_app/presentation/dashboard/widgets/shimmer_list.dart';
 import 'package:neru_lending_app/utils/constant_colors.dart';
 import 'package:neru_lending_app/utils/constant_fonts.dart';
 
@@ -13,15 +14,18 @@ class DashboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(
-            Icons.menu,
-            color: Pallete.whiteColor,
-          ),
-          tooltip: "Menu",
-          onPressed: () {},
-        ),
-        backgroundColor: ConstantColors.gradientBeginColor,
+        backgroundColor: ConstantColors.gradientStopColor,
+        leading: Builder(builder: (context) {
+          return GestureDetector(
+            onTap: () {
+              Scaffold.of(context).openDrawer();
+            },
+            child: const Icon(
+              Icons.menu,
+              color: Pallete.whiteColor,
+            ),
+          );
+        }),
         title: Text(
           "Welcome",
           style: TextStyle(fontFamily: ConstantFonts.workSansMedium, color: ConstantColors.whiteColor),
@@ -35,6 +39,11 @@ class DashboardScreen extends StatelessWidget {
                 color: ConstantColors.whiteColor,
               ))
         ],
+      ),
+      drawer: const Drawer(
+        child: Center(
+          child: Text("Drawer"),
+        ),
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -93,7 +102,7 @@ class DashboardScreen extends StatelessWidget {
                           itemCount: docs.length,
                         );
                       }
-                        return const Center(child: CircularProgressIndicator());
+                        return const ShimmerList();
                     },
                     )),
               ),
@@ -134,6 +143,11 @@ class LiveBalanceCard extends StatelessWidget {
                       "Balance",
                       style: TextStyle(
                           fontFamily: ConstantFonts.workSansMedium, color: ConstantColors.whiteColor, fontSize: 40),
+                    ),
+                    Text(
+                      "Your Business coins",
+                      style: TextStyle(
+                          fontFamily: ConstantFonts.workSansMedium, color: ConstantColors.whiteColor, fontSize: 15),
                     ),
                     const CounterBalanceText(
                       begin: 0,
