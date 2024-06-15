@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:neru_lending_app/presentation/dashboard/screens/industry_details_screen.dart';
 import 'package:neru_lending_app/utils/constant_colors.dart';
 
 
 class IndustryCard extends StatelessWidget {
-  const IndustryCard({super.key, required this.image, required this.text});
+  const IndustryCard({super.key, required this.image, required this.text, required this.onTap});
   final String image;
   final String text;
+  final Function() onTap;
 
 
   @override
@@ -15,7 +14,7 @@ class IndustryCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
-        onTap: () => Get.to(()=> const IndustryDetailsScreen()),
+        onTap: onTap,
         child: Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(

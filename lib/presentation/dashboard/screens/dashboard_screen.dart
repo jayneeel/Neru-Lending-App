@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:neru_lending_app/presentation/dashboard/controllers/industry_controller.dart';
+import 'package:neru_lending_app/presentation/dashboard/screens/industry_details_screen.dart';
 import 'package:neru_lending_app/presentation/dashboard/widgets/counter_balance_text.dart';
 import 'package:neru_lending_app/presentation/dashboard/widgets/industry_card.dart';
 import 'package:neru_lending_app/presentation/dashboard/widgets/shimmer_list.dart';
@@ -38,14 +39,55 @@ class DashboardScreen extends StatelessWidget {
               onPressed: () {},
               tooltip: "Logout",
               icon: Icon(
-                Icons.output_outlined,
+                Icons.person,
                 color: ConstantColors.whiteColor,
               ))
         ],
       ),
-      drawer: const Drawer(
-        child: Center(
-          child: Text("Drawer"),
+      drawer: Drawer(
+        elevation: 1,
+        width: 250,
+        child: ListView(
+          children: [
+            UserAccountsDrawerHeader(
+                currentAccountPicture: Image.asset('assets/images/logo.png'),
+                arrowColor: Colors.black,
+                accountName: const Text('Jayneel Kanungo'),
+                accountEmail: const Text('kanungojayneel@gmail.com')),
+            const ListBody(
+              children: [
+                ListTile(
+                  leading: Icon(Icons.web),
+                  title: Text("Create my portal"),
+                ),
+                ListTile(
+                  leading: Icon(Icons.area_chart),
+                  title: Text("My Goals with platform"),
+                ),
+                ListTile(
+                  leading: Icon(Icons.safety_check),
+                  title: Text("Life Insurance"),
+                ),
+                ListTile(
+                  leading: Icon(Icons.corporate_fare),
+                  title: Text("Corporate credit list"),
+                ),
+                ListTile(
+                  leading: Icon(Icons.business_center),
+                  title: Text("Business Credit Repair"),
+                ),
+              ],
+            ),
+            const Align(
+              alignment: Alignment.bottomCenter,
+              child: ListTile(
+                  leading: Icon(
+                    Icons.logout_outlined,
+                    color: Colors.red,
+                  ),
+                  title: Text("Logout", style: TextStyle(color: Colors.red),)),
+            )
+          ],
         ),
       ),
       body: Container(
@@ -101,8 +143,10 @@ class DashboardScreen extends StatelessWidget {
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 1),
                           itemBuilder: (context, index) {
-                            final data = docs[index];
-                            return IndustryCard(image: data['imageUrl'], text: data['title']);
+                            final dataItem = docs[index];
+                            return IndustryCard(image: dataItem['imageUrl'], text: dataItem['title'], onTap: (){
+                              Get.to(IndustryDetailsScreen(data: dataItem,));
+                            },);
                           },
                           itemCount: docs.length,
                         );
@@ -194,54 +238,87 @@ class LiveBalanceCard extends StatelessWidget {
 
   Future<void> showInfoBottomSheet(BuildContext context) async {
     await showModalBottomSheet(
+        isDismissible: true,
         context: context,
         builder: (BuildContext context) => Container(
+              height: 270,
               decoration: const BoxDecoration(
-                color: Color(0xffFFEBEB),
+                color: Color(0xfff2f4fd),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(16),
                   topRight: Radius.circular(16),
                 ),
               ),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
-                    Center(
-                      child: Text(
-                        "How to use your business coins?",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xff121515),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "How to use your business coins?",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: ConstantFonts.workSansSemiBold,
+                            color: Color(0xff121515),
+                          ),
                         ),
-                        textAlign: TextAlign.center,
-                      ),
+                        Icon(
+                          Icons.cancel,
+                          color: Colors.grey,
+                        )
+                      ],
                     ),
-                    SizedBox(
-                      height: 18,
+                    const SizedBox(
+                      height: 10,
                     ),
-                    Text(
-                      "Here some ways you use your coins",
+                    const Text(
+                      "Here some ways you can use your coins",
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: Color(0xff0e0e0e),
                       ),
                     ),
-                    SizedBox(height: 24),
+                    const SizedBox(height: 24),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-
+                        Image.asset(
+                          "assets/images/coin.png",
+                          width: 50,
+                          height: 50,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        const Text("Buys Assets from industries",
+                            style: TextStyle(fontFamily: ConstantFonts.workSansMedium, fontSize: 14)),
                       ],
                     ),
-                    SizedBox(height: 26),
+                    const SizedBox(height: 14),
+                    Row(
+                      children: [
+                        Image.asset(
+                          "assets/images/earning.png",
+                          width: 50,
+                          height: 50,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        const Text(
+                          "Invest money in mutual funds",
+                          style: TextStyle(fontFamily: ConstantFonts.workSansMedium, fontSize: 14),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
                   ],
                 ),
               ),
