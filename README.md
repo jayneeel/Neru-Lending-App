@@ -1,7 +1,13 @@
 # neru_lending_app
 
-## Structure
+## Structure and State Management
+State Management used is GetX
 
+Directory Strurcture:
+lib
+  > presentation: contains all the ViewModel and DataController.<br><br>
+  > utils: contains all the constants
+  
 ## Screenshots
 <table>
   <tr>
