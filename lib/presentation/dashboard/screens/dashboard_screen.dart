@@ -1,9 +1,6 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:neru_lending_app/presentation/dashboard/controllers/industry_controller.dart';
-import 'package:neru_lending_app/presentation/dashboard/model/industry_response_model.dart';
 import 'package:neru_lending_app/presentation/dashboard/widgets/counter_balance_text.dart';
 import 'package:neru_lending_app/presentation/dashboard/widgets/industry_card.dart';
 import 'package:neru_lending_app/utils/constant_colors.dart';
@@ -14,7 +11,7 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final IndustryController industryController = Get.put(IndustryController());
+    // final IndustryController industryController = Get.put(IndustryController());
     final List<Map<String, dynamic>> data = [
       {"image": "assets/images/accountant.jpeg", "title": "Accountant"},
       {"image": "assets/images/medical.jpeg", "title": "Medical"},
@@ -25,9 +22,6 @@ class DashboardScreen extends StatelessWidget {
       {"image": "assets/images/real_estate.jpeg", "title": "Real Estate"},
     ];
 
-    const border = OutlineInputBorder(
-        borderSide: BorderSide(color: Color.fromRGBO(225, 225, 225, 1)),
-        borderRadius: BorderRadius.horizontal(left: Radius.circular(50)));
 
     return Scaffold(
       appBar: AppBar(
@@ -94,21 +88,27 @@ class DashboardScreen extends StatelessWidget {
                   color: ConstantColors.transparentWhiteColor.withOpacity(0.1),
                   borderRadius: const BorderRadius.only(topLeft: Radius.circular(35), topRight: Radius.circular(35)),
                 ),
-                child: Obx(()=>
-                (industryController.isLoading.value) ?
-                    const CircularProgressIndicator():
-                    GridView.builder(
-                  shrinkWrap: true,
-                  gridDelegate:
-                  const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 1),
-                  itemBuilder: (context, index) {
-                    final Industry industry = industryController.industryList.value[index];
-                    return IndustryCard(image: industry.imageUrl, text: industry.title);
-                  },
-                  itemCount: industryController.industryList.length,
-                )),
+                child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                      stream: FirebaseFirestore.instance.collection("industries").snapshots(),
+                      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                        if (snapshot.hasError) return Text('Error = ${snapshot.error}');
+                        if (snapshot.hasData){
+                          final docs = snapshot.data!.docs;
+                        return GridView.builder(
+                          shrinkWrap: true,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 1),
+                          itemBuilder: (context, index) {
+                            final data = docs[index];
+                            return IndustryCard(image: data['imageUrl'], text: data['title']);
+                          },
+                          itemCount: docs.length,
+                        );
+                      }
+                        return const Center(child: CircularProgressIndicator());
+                    },
+                    )),
               ),
-            )
           ],
         ),
       ),
