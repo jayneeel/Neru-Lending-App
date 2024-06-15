@@ -29,7 +29,7 @@ class IndustryDetailsScreen extends StatelessWidget {
           ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: Image.network(data['imageUrl'])),
-          SizedBox(height: 20,),
+          const SizedBox(height: 20,),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
             decoration: BoxDecoration(

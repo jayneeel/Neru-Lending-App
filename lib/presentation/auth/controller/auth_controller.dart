@@ -12,9 +12,9 @@ class AuthController extends GetxController{
       return userCredential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        Get.showSnackbar(const GetSnackBar(title: "User not found",));
-      } else if (e.code == 'wrong-password') {
-        Get.showSnackbar(const GetSnackBar(title: "Incorrect credentails",));
+        Get.showSnackbar(const GetSnackBar(message: "User not found",));
+      } else if (e.code == 'invalid-credential') {
+        Get.showSnackbar(const GetSnackBar(message: "Incorrect credentails",));
       }
       rethrow;
     }

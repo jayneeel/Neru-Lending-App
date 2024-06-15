@@ -8,7 +8,7 @@ class ShimmerList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
       baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[200]!,
+      highlightColor: Colors.grey[100]!,
       child: GridView.builder(
         itemCount: 6,
         itemBuilder: (context, index) {

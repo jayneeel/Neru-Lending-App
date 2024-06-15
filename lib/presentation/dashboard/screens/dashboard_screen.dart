@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -9,6 +10,8 @@ import 'package:neru_lending_app/presentation/dashboard/widgets/industry_card.da
 import 'package:neru_lending_app/presentation/dashboard/widgets/shimmer_list.dart';
 import 'package:neru_lending_app/utils/constant_colors.dart';
 import 'package:neru_lending_app/utils/constant_fonts.dart';
+
+import '../../auth/screens/auth_gate_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -36,15 +39,19 @@ class DashboardScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+                Get.showSnackbar(const GetSnackBar(message: "Sign out Successful!",));
+                Get.to(const AuthScreen());
+              },
               tooltip: "Logout",
               icon: Icon(
-                Icons.person,
+                Icons.logout_outlined,
                 color: ConstantColors.whiteColor,
               ))
         ],
       ),
-      drawer: SideDrawer(),
+      drawer: const SideDrawer(),
       body: Container(
         decoration: BoxDecoration(
           gradient: gradient,

@@ -1,7 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:neru_lending_app/presentation/auth/screens/auth_gate_screen.dart';
 
 class SideDrawer extends StatelessWidget {
   const SideDrawer({
@@ -44,20 +41,12 @@ class SideDrawer extends StatelessWidget {
               ),
             ],
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: ListTile(
-              onTap: () async {
-                await FirebaseAuth.instance.signOut();
-                Get.showSnackbar(const GetSnackBar(title: "Sign out Successful!",));
-                Get.to(const AuthScreen());
-              },
-                leading: const Icon(
-                  Icons.logout_outlined,
-                  color: Colors.red,
-                ),
-                title: const Text("Logout", style: TextStyle(color: Colors.red),)),
-          )
+          ListTile(
+              leading: const Icon(
+                Icons.logout_outlined,
+                color: Colors.red,
+              ),
+              title: const Text("Logout", style: TextStyle(color: Colors.red),))
         ],
       ),
     );
