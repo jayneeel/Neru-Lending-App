@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:neru_lending_app/utils/constant_colors.dart';
 import 'package:neru_lending_app/utils/constant_fonts.dart';
 
-import '../../button.dart';
+import '../widgets/button.dart';
 
 class IndustryDetailsScreen extends StatelessWidget {
   const IndustryDetailsScreen({super.key, required this.data});

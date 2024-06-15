@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:neru_lending_app/presentation/auth/widgets/login_field.dart';
-import 'package:neru_lending_app/presentation/button.dart';
+import 'package:neru_lending_app/presentation/dashboard/widgets/button.dart';
 import 'package:neru_lending_app/presentation/dashboard/screens/dashboard_screen.dart';
 import 'package:neru_lending_app/utils/constant_colors.dart';
 import 'package:neru_lending_app/utils/constant_fonts.dart';
