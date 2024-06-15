@@ -55,7 +55,9 @@ class DashboardScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Obx(()=> LiveBalanceCard(balance: controller.balance.value,)),
+            Obx(() => LiveBalanceCard(
+                  balance: controller.balance.value,
+                )),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Column(
@@ -83,17 +85,17 @@ class DashboardScreen extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                padding: const EdgeInsets.only(top: 30, left: 10, right: 10),
-                decoration: BoxDecoration(
-                  color: ConstantColors.transparentWhiteColor.withOpacity(0.1),
-                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(35), topRight: Radius.circular(35)),
-                ),
-                child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                      stream: controller.fetchIndustries,
-                      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-                        if (snapshot.hasError) return Text('Error = ${snapshot.error}');
-                        if (snapshot.hasData){
-                          final docs = snapshot.data!.docs;
+                  padding: const EdgeInsets.only(top: 30, left: 10, right: 10),
+                  decoration: BoxDecoration(
+                    color: ConstantColors.transparentWhiteColor.withOpacity(0.1),
+                    borderRadius: const BorderRadius.only(topLeft: Radius.circular(35), topRight: Radius.circular(35)),
+                  ),
+                  child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                    stream: controller.fetchIndustries,
+                    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                      if (snapshot.hasError) return Text('Error = ${snapshot.error}');
+                      if (snapshot.hasData) {
+                        final docs = snapshot.data!.docs;
                         return GridView.builder(
                           shrinkWrap: true,
                           gridDelegate:
@@ -105,10 +107,10 @@ class DashboardScreen extends StatelessWidget {
                           itemCount: docs.length,
                         );
                       }
-                        return const ShimmerList();
+                      return const ShimmerList();
                     },
-                    )),
-              ),
+                  )),
+            ),
           ],
         ),
       ),
@@ -118,7 +120,8 @@ class DashboardScreen extends StatelessWidget {
 
 class LiveBalanceCard extends StatelessWidget {
   const LiveBalanceCard({
-    super.key, required this.balance,
+    super.key,
+    required this.balance,
   });
   final double balance;
 
@@ -148,10 +151,26 @@ class LiveBalanceCard extends StatelessWidget {
                       style: TextStyle(
                           fontFamily: ConstantFonts.workSansMedium, color: ConstantColors.whiteColor, fontSize: 40),
                     ),
-                    Text(
-                      "Your Business coins",
-                      style: TextStyle(
-                          fontFamily: ConstantFonts.workSansMedium, color: ConstantColors.whiteColor, fontSize: 15),
+                    Row(
+                      children: [
+                        Text(
+                          "Your Business coins",
+                          style: TextStyle(
+                              fontFamily: ConstantFonts.workSansMedium, color: ConstantColors.whiteColor, fontSize: 15),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        InkWell(
+                            onTap: () async {
+                              showInfoBottomSheet(context);
+                            },
+                            child: const Icon(
+                              Icons.info_outline,
+                              color: Colors.white70,
+                              size: 15,
+                            ))
+                      ],
                     ),
                     CounterBalanceText(
                       begin: 0,
@@ -159,7 +178,8 @@ class LiveBalanceCard extends StatelessWidget {
                       duration: const Duration(seconds: 2),
                       prefix: "\$ ",
                       precision: 2,
-                      style: const TextStyle(color: Pallete.whiteColor, fontSize: 20),
+                      style: const TextStyle(
+                          color: Pallete.whiteColor, fontSize: 20, fontFamily: ConstantFonts.workSansSemiBold),
                     ),
                   ],
                 ),
@@ -170,5 +190,61 @@ class LiveBalanceCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> showInfoBottomSheet(BuildContext context) async {
+    await showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) => Container(
+              decoration: const BoxDecoration(
+                color: Color(0xffFFEBEB),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(16),
+                  topRight: Radius.circular(16),
+                ),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Center(
+                      child: Text(
+                        "How to use your business coins?",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xff121515),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 18,
+                    ),
+                    Text(
+                      "Here some ways you use your coins",
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xff0e0e0e),
+                      ),
+                    ),
+                    SizedBox(height: 24),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+
+                      ],
+                    ),
+                    SizedBox(height: 26),
+                  ],
+                ),
+              ),
+            ));
   }
 }

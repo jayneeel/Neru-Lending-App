@@ -28,12 +28,15 @@ class IndustryCard extends StatelessWidget {
               ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: Image.network(image, width: 160, height: 100, fit: BoxFit.fill,)),
-              const SizedBox(height: 5,),
-              Text(text, style: const TextStyle(fontSize: 16, color: Colors.white),),
-              const Align(
-                alignment: Alignment.bottomRight,
-                child: Icon(Icons.arrow_forward_ios, color: Colors.white,),
-              )
+              const SizedBox(height: 25,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(text, style: const TextStyle(fontSize: 16, color: Colors.white),),
+                  const Icon(Icons.arrow_forward_ios_rounded, color: Colors.white,)
+                ],
+              ),
             ],
           ),
         ),
